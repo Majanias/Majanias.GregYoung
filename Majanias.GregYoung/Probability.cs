@@ -3,13 +3,22 @@ namespace Majanias.GregYoung
 {
     public class Probability
     {
-        private readonly decimal _value;
+        private readonly float _value;
+        private const float _epsilon = 0.0000001f;
 
         public Probability(decimal value)
         {
             if (value < 0 || value > 1)
                 throw new ArgumentOutOfRangeException("value");
-            _value = value;
+            _value = (float)value;
+        }
+
+        public Probability(float value)
+        {
+            if (value >= 0 && value <= 1)
+                _value = value;
+            else
+                throw new ArgumentOutOfRangeException("value");
         }
 
         public Probability CombinedWith(Probability other)
@@ -56,7 +65,7 @@ namespace Majanias.GregYoung
             if ((object)b == null)
                 return false;
 
-            return a._value < b._value;
+            return (a._value - b._value) < -_epsilon;
         }
 
         public static bool operator >(Probability a, Probability b)
@@ -70,7 +79,7 @@ namespace Majanias.GregYoung
             if ((object)b == null)
                 return true;
 
-            return a._value > b._value;
+            return (a._value - b._value) > _epsilon;
         }
 
         public static bool operator <=(Probability a, Probability b)

@@ -237,5 +237,38 @@ namespace Majanias.GregYoung.Tests
             Assert.IsFalse(null >= p1);
             Assert.IsFalse(null >= p2);
         }
+
+        [TestMethod]
+        public void ConstructorWithNan()
+        {
+            try
+            {
+                var pNan = new Probability(float.NaN);
+                Assert.Fail("Should've thrown an ArgumentOutOfRangeException.");
+            }
+            catch (ArgumentOutOfRangeException) { }
+        }
+
+        [TestMethod]
+        public void ConstructorWithPositiveInfinity()
+        {
+            try
+            {
+                var pNan = new Probability(float.PositiveInfinity);
+                Assert.Fail("Should've thrown an ArgumentOutOfRangeException.");
+            }
+            catch (ArgumentOutOfRangeException) { }
+        }
+
+        [TestMethod]
+        public void ConstructorWithNegativeInfinity()
+        {
+            try
+            {
+                var pNan = new Probability(float.NegativeInfinity);
+                Assert.Fail("Should've thrown an ArgumentOutOfRangeException.");
+            }
+            catch (ArgumentOutOfRangeException) { }
+        }
     }
 }
